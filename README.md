@@ -1,43 +1,39 @@
-Sistema de Ordem de Serviço (OS)
-Descrição do Projeto
+# Sistema de Ordem de Serviço (OS)
 
-Este projeto é um sistema de gerenciamento de Ordens de Serviço (OS) desenvolvido para uma loja de informática.
-O sistema tem como objetivo auxiliar no controle de atendimentos técnicos, permitindo o cadastro, consulta, atualização e exclusão de ordens de serviço, clientes e produtos.
+## Descrição do Projeto
 
-Atualmente, o projeto está em desenvolvimento inicial, utilizando Java com Maven e MySQL como banco de dados. A interface gráfica está sendo construída com JFrame.
+Este projeto é um **sistema de gerenciamento de Ordens de Serviço (OS)** desenvolvido para uma **loja de informática**.  
+O sistema tem como objetivo auxiliar no **controle de atendimentos técnicos**, permitindo o **cadastro, consulta, atualização e exclusão** de ordens de serviço, clientes e produtos.  
 
-Tecnologias Utilizadas
+Atualmente, o projeto está em **desenvolvimento inicial**, utilizando **Java com Maven** e **MySQL** como banco de dados.  
+A interface gráfica está sendo construída com **JFrame**.  
 
-Java (JDK 17+)
+---
 
-Maven (gerenciamento de dependências)
+## Tecnologias Utilizadas
 
-MySQL (banco de dados relacional)
+- **Java (JDK 17+)**  
+- **Maven** (gerenciamento de dependências)  
+- **MySQL** (banco de dados relacional)  
+- **JDBC** (para conexão com o banco de dados)  
+- **Swing / JFrame** (interface gráfica)  
 
-JDBC (para conexão com o banco de dados)
+---
 
-Swing / JFrame (interface gráfica)
+## Funcionalidades previstas
 
-Funcionalidades previstas
+- **Login de usuários** (com validação no banco de dados).  
+- **CRUD de Clientes**.  
+- **CRUD de Produtos/Serviços**.  
+- **CRUD de Ordens de Serviço**.  
+- **Relatórios simples** (ordens em aberto, ordens concluídas, etc.).  
+- **Controle de acesso** por perfil de usuário (administrador/técnico).  
 
-Login de usuários (com validação no banco de dados).
+---
 
-CRUD de Clientes.
+## Status do Projeto
 
-CRUD de Produtos/Serviços.
-
-CRUD de Ordens de Serviço.
-
-Relatórios simples (ordens em aberto, ordens concluídas, etc.).
-
-Controle de acesso por perfil de usuário (administrador/técnico).
-
-Status do Projeto
-
-Etapa atual:
-
-Tela de Login desenhada (JFrame).
-
-Conexão com o banco de dados MySQL implementada.
-
-Próximo passo: Validação de login com dados do banco.
+**Etapa atual:**  
+- **Tela de Login desenhada (JFrame).**  
+- **Conexão com o banco de dados MySQL implementada.**  
+- **Próximo passo: Validação de login com dados do banco.**  

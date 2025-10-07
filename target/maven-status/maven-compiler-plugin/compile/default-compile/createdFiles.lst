@@ -1,7 +1,10 @@
 br\com\OsX\telas\TelaLogin.class
+br\com\OsX\telas\AboutTela.class
 com\mycompany\osx\OsX.class
 br\com\OsX\telas\TelaPrincipal$1.class
 br\com\OsX\telas\TelaLogin$1.class
 br\com\OsX\telas\TelaLogin$2.class
 br\com\OsX\dla\ModuloConexao.class
+br\com\OsX\telas\TelaPrincipal$2.class
+br\com\OsX\telas\TelaPrincipal$3.class
 br\com\OsX\telas\TelaPrincipal.class

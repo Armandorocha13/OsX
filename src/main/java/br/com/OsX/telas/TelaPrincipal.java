@@ -45,7 +45,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         memCadUsu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        MenuUsu = new javax.swing.JMenuItem();
         memServ = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         memSobre = new javax.swing.JMenu();
@@ -106,6 +106,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initData.setText("Data:");
 
         memCadUsu.setText("Cadastro");
+        memCadUsu.setEnabled(false);
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         jMenuItem1.setText("Cliente");
@@ -115,13 +116,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem2.setText("OS");
         memCadUsu.add(jMenuItem2);
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        jMenuItem3.setText("Usuarios");
-        memCadUsu.add(jMenuItem3);
+        MenuUsu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        MenuUsu.setText("Usuarios");
+        memCadUsu.add(MenuUsu);
 
         menu.add(memCadUsu);
 
         memServ.setText("Relatorio");
+        memServ.setEnabled(false);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_DOWN_MASK));
         jMenuItem4.setText("Serviços");
@@ -132,6 +134,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         memSobre.setText("Ajuda");
 
         jMenuItem5.setText("Sobre");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         memSobre.add(jMenuItem5);
 
         menu.add(memSobre);
@@ -220,9 +227,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // Criando a logica do botao de sair. Exibindo uma caixa de dialogo
         int sair = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja sair?", "Atenção", JOptionPane.YES_NO_OPTION );
         
-        
+        if (sair == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
         
     }//GEN-LAST:event_memSairActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        //chamando a tela sobre
+        AboutTela sobre = new AboutTela();
+        sobre.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,13 +268,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel Data;
     private javax.swing.JDesktopPane Desktop;
     private javax.swing.JDesktopPane DesktopPane;
+    public static javax.swing.JMenuItem MenuUsu;
     private javax.swing.JLabel initData;
     private javax.swing.JLabel initUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -267,7 +282,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JMenu memCadUsu;
     private javax.swing.JMenu memSair;
-    private javax.swing.JMenu memServ;
+    public static javax.swing.JMenu memServ;
     private javax.swing.JMenu memSobre;
     private javax.swing.JMenuBar menu;
     // End of variables declaration//GEN-END:variables

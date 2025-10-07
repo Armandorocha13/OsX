@@ -22,29 +22,27 @@ public class TelaLogin extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
     
-    public void logar(){
-        String sql = "select * from tbusuarios where login =? and senha=?";
-        try {
-            //Preparando a consulta no banco de dados com base no que foi digitado na area de login e senha
+   public void logar(){
+    String sql = "select * from tbusuarios where login=? and senha=?";
+    try {
         pst = conexao.prepareStatement(sql);
         pst.setString(1, txtUsuario.getText());
         pst.setString(2, txtSenha.getText());
-        //executando a query
+        
         rs = pst.executeQuery();
         
-        
         if(rs.next()){
-       TelaPrincipal principal = new TelaPrincipal();
-       principal.setVisible(true);
-       this.dispose();
-       conexao.close();
+           TelaPrincipal principal = new TelaPrincipal();
+           principal.setVisible(true);
+           this.dispose();
+           conexao.close();
         }else{
-            JOptionPane.showMessageDialog(null, "Usuario e/ou senha incorretos");
+            JOptionPane.showMessageDialog(null, "Usuário e/ou senha incorretos");
         }
-        } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
+    } catch (HeadlessException | SQLException e) {
+        JOptionPane.showMessageDialog(null, e);
     }
+}
     
     /**
      * Creates new form TelaLogin
@@ -72,9 +70,9 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
-        txtSenha = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
+        txtSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -148,7 +146,8 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-logar();        // TODO add your handling code here:
+
+        logar();       // TODO add your handling code here:
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
@@ -181,7 +180,7 @@ logar();        // TODO add your handling code here:
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblStatus;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -23,7 +23,7 @@ public class TelaLogin extends javax.swing.JFrame {
     ResultSet rs = null;
     
    public void logar(){
-    String sql = "select * from tbusuarios where login=? and senha=?";
+    String sql = "select * from tbusuarios where login=? and senha=?;";
     try {
         pst = conexao.prepareStatement(sql);
         pst.setString(1, txtUsuario.getText());
@@ -31,9 +31,24 @@ public class TelaLogin extends javax.swing.JFrame {
         
         rs = pst.executeQuery();
         
+        System.out.println("logado");
+        
         if(rs.next()){
-           TelaPrincipal principal = new TelaPrincipal();
+            
+            String perfil = rs.getString(6);
+            
+            if(perfil.equals("admin")){
+            TelaPrincipal principal = new TelaPrincipal();
            principal.setVisible(true);
+           TelaPrincipal.menuRel.setEnabled(true);
+           TelaPrincipal.MenuUsu.setEnabled(true);
+           this.dispose();
+            }else{
+                TelaPrincipal principal = new TelaPrincipal();
+                principal.setVisible(true);
+                this.dispose();
+            }
+           
         }else{
             JOptionPane.showMessageDialog(null, "Usuário e/ou senha incorretos");
         }
@@ -145,7 +160,8 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
-        logar();       // TODO add your handling code here:
+        logar();
+              // TODO add your handling code here:
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**

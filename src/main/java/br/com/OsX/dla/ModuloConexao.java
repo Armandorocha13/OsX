@@ -15,7 +15,7 @@ public class ModuloConexao {
         
         java.sql.Connection conexao;
         
-        String driver = "com.mysql.jdbc.Driver";
+        String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/dbinfox";
         String user = "root";
         String password = "081828";
@@ -24,6 +24,7 @@ public class ModuloConexao {
         try {
             Class.forName(driver);
             conexao = DriverManager.getConnection(url, user, password);
+            System.out.println("BD conectado");
             return conexao;
            
         } catch (ClassNotFoundException | SQLException e) {

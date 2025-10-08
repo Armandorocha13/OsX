@@ -30,21 +30,21 @@ public class TelaLogin extends javax.swing.JFrame {
         pst.setString(2, txtSenha.getText());
         
         rs = pst.executeQuery();
-        
-        System.out.println("logado");
-        
+               
         if(rs.next()){
             
             String perfil = rs.getString(6);
             
             if(perfil.equals("admin")){
-            TelaPrincipal principal = new TelaPrincipal();
+            
+              TelaPrincipal principal = new TelaPrincipal();
            principal.setVisible(true);
            TelaPrincipal.menuRel.setEnabled(true);
            TelaPrincipal.MenuUsu.setEnabled(true);
            this.dispose();
             }else{
-                TelaPrincipal principal = new TelaPrincipal();
+                TelaPrincipal principal;
+                principal = new TelaPrincipal();
                 principal.setVisible(true);
                 this.dispose();
             }
@@ -156,6 +156,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed

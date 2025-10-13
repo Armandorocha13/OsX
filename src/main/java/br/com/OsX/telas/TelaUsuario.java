@@ -3,19 +3,58 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package br.com.OsX.telas;
+import java.sql.*;
+import br.com.OsX.dla.ModuloConexao;
+import javax.swing.JOptionPane;
+
+
 
 /**
  *
  * @author july6
  */
 public class TelaUsuario extends javax.swing.JInternalFrame {
-
+    
+    
+    Connection conexao = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    
+    
     /**
      * Creates new form TelaUsuario
      */
     public TelaUsuario() {
+        
         initComponents();
-    }
+        
+     
+      private void consultar(){
+          String sql = "select * from tbusuarios where iduser=?";
+          /*tratamento de excecao*/
+          try {
+              pst = conexao.prepareStatement(sql);
+              pst.setString(1,txtUsuId. getText());
+              rs= pst.executeQuery();
+              
+              
+              if(rs.next()){
+                  txtUsuNome.setText(rs.getString(2));
+                  txtUsuFone.setText(rs.getString(3));
+                  txtUsuLogin.setText(rs.getString(4));
+                  txtUsuSenha.setText(rs.getString(5));
+                  //referencia ao combobox
+                  cboUsuPerfil.setSelectedItem(rs.getString(6));
+              } else{
+                  JOptionPane.showMessageDialog(null, "Usuario não cadastrado");
+              }
+        
+          } catch (Exception e) {
+              
+              JOptionPane.showMessageDialog(null, e);
+          }
+          }
+      }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,8 +77,8 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         cboUsuPerfil = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         txtUsuFone = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnUsuCriar = new javax.swing.JButton();
+        btnUsuBuscar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
@@ -71,9 +110,14 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel6.setText("Telefone");
 
-        jButton1.setText("Criar");
+        btnUsuCriar.setText("Criar");
 
-        jButton2.setText("Buscar");
+        btnUsuBuscar.setText("Buscar");
+        btnUsuBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuBuscarActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Atualizar");
 
@@ -101,12 +145,9 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel1)
                                         .addGap(28, 28, 28)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtUsuId, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(171, 171, 171))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtUsuLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(80, 80, 80))))
+                                    .addComponent(txtUsuId, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtUsuLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -121,9 +162,9 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                             .addComponent(cboUsuPerfil, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnUsuCriar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnUsuBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
@@ -155,14 +196,14 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                     .addComponent(cboUsuPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
+                    .addComponent(btnUsuCriar)
+                    .addComponent(btnUsuBuscar)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
                 .addGap(78, 78, 78))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnUsuBuscar, btnUsuCriar, jButton3, jButton4});
 
         setBounds(0, 0, 606, 394);
     }// </editor-fold>//GEN-END:initComponents
@@ -171,11 +212,16 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuNomeActionPerformed
 
+    private void btnUsuBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuBuscarActionPerformed
+        // TODO add your handling code here:
+        consultar();
+    }//GEN-LAST:event_btnUsuBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnUsuBuscar;
+    private javax.swing.JButton btnUsuCriar;
     private javax.swing.JComboBox<String> cboUsuPerfil;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;

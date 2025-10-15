@@ -7,6 +7,13 @@ import java.sql.*;
 import br.com.OsX.dla.ModuloConexao;
 import javax.swing.JOptionPane;
 
+    void setVisibled(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+
+
+
 
 
 /**
@@ -21,39 +28,42 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     ResultSet rs = null;
     
     
+    
     /**
      * Creates new form TelaUsuario
      */
     public TelaUsuario() {
         
         initComponents();
+        conexao = ModuloConexao.conector();
         
-     
-      private void consultar(){
-          String sql = "select * from tbusuarios where iduser=?";
-          /*tratamento de excecao*/
-          try {
-              pst = conexao.prepareStatement(sql);
-              pst.setString(1,txtUsuId. getText());
-              rs= pst.executeQuery();
-              
-              
-              if(rs.next()){
-                  txtUsuNome.setText(rs.getString(2));
-                  txtUsuFone.setText(rs.getString(3));
-                  txtUsuLogin.setText(rs.getString(4));
-                  txtUsuSenha.setText(rs.getString(5));
-                  //referencia ao combobox
-                  cboUsuPerfil.setSelectedItem(rs.getString(6));
-              } else{
-                  JOptionPane.showMessageDialog(null, "Usuario não cadastrado");
-              }
-        
-          } catch (Exception e) {
-              
-              JOptionPane.showMessageDialog(null, e);
-          }
-          }
+            
+        }
+    
+    private void consultar(){
+    
+        String sql = "SELECT * FROM tbusuarios WHERE iduser=?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtUsuId.getText());
+            
+            if (rs.next()) {
+                txtUsuNome.setText(rs.getString(2));
+                txtUsuFone.setText(rs.getString(3));
+                txtUsuLogin.setText(rs.getString(4));
+                txtUsuSenha.setText(rs.getString(5));
+                //consultar ao combobox
+                cboUsuPerfil.setSelectedItem(rs.getString(6));    
+            } else {
+           
+                JOptionPane.showMessageDialog(null, "Usuario não cadastrado!");
+            }
+            
+        } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
       }
 
     /**
@@ -214,12 +224,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
     private void btnUsuBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuBuscarActionPerformed
         // TODO add your handling code here:
-        consultar();
     }//GEN-LAST:event_btnUsuBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnUsuBuscar;
+    public static javax.swing.JButton btnUsuBuscar;
     private javax.swing.JButton btnUsuCriar;
     private javax.swing.JComboBox<String> cboUsuPerfil;
     private javax.swing.JButton jButton3;

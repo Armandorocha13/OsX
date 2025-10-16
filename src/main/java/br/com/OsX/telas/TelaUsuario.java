@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
  *
  * @author july6
  */
+
 public class TelaUsuario extends javax.swing.JInternalFrame {
 
     /**
@@ -43,16 +44,43 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                 txtUsuSenha.setText(rs.getString(5));
                 //Linha de consutar ao combobox
                 cboUsuPerfil.setSelectedItem(rs.getString(6));
-                
 
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario não cadastrado!");
+                txtUsuNome.setText(null);
+                txtUsuFone.setText(null);
+                txtUsuLogin.setText(null);
+                txtUsuSenha.setText(null);
+                cboUsuPerfil.setSelectedItem(null);
+
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-    }
+        
+        //Criando o metodo adicionar 
 
+        private void adicionar(){
+            String sql = "inset into tb usuario(iduser,usuario,fone,login,senha,perfil) values(?,?,?,?,?,?)";
+            try {
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1,txtUsuId.getText());               
+                pst.setString(2,txtUsuNome.getText());
+                pst.setString(3,txtUsuFone.getText());
+                pst.setString(4,txtUsuLogin.getText());
+                pst.setString(5,txtUsuSenha.getText());
+                pst.setString(6, cboUsuPerfil.getSelectedItem() .toString());
+                                                                                
+
+
+
+                
+            } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, e);
+
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -102,8 +130,18 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         cboUsuPerfil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnCriar.setText("Criar");
+        btnCriar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCriarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnAtualizar.setText("Atualizar");
 
@@ -194,6 +232,16 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuSenhaActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarActionPerformed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCriarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
@@ -214,7 +262,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtUsuSenha;
     // End of variables declaration//GEN-END:variables
 
-    void setVisibled(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+void setVisibled(boolean b) {
+    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+}
 }

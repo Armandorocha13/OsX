@@ -60,6 +60,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             if (txtUsuId.getText().isEmpty() || txtUsuNome.getText().isEmpty() ||
                 txtUsuLogin.getText().isEmpty() || txtUsuSenha.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios!");
+                //estrutura para confimar o cadastro de usuari 
             } else {
                 int adicionado = pst.executeUpdate();
                 if (adicionado > 0) {

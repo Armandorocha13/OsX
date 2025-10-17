@@ -102,6 +102,28 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
         }
     }
+    
+        // ================= MÉTODO DELETE =================
+
+    private void remover(){
+        //codigo para confirmar a remocao do usuario
+        int confirma=JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover esse usuario?", "Atenção",JOptionPane.YES_NO_OPTION);
+        if(confirma==JOptionPane.YES_OPTION){
+            String sql ="delete from tbusuario where iduser=?";
+            try {
+                pst=conexao.prepareStatement(sql);
+                pst.setString(1, txtUsuId.getText());
+              int apagado =  pst.executeUpdate();
+              if(apagado>0){
+                    JOptionPane.showMessageDialog(null, "Usuario removido com sucesso!");
+                    limparCampos();
+                    
+              }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
 
     // ================= MÉTODO LIMPAR CAMPOS =================
     private void limparCampos() {
@@ -237,12 +259,18 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     }
 
     private void btnCriarActionPerformed(java.awt.event.ActionEvent evt) {
+        
         adicionar();
     }
     
       private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {
           alterar();
     }
+      
+          private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {
+          remover();
+    }
+      
 
     // ================= VARIÁVEIS =================
     private javax.swing.JButton btnAtualizar;

@@ -3,18 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package br.com.OsX.telas;
+
 import java.sql.*;
 import br.com.OsX.dla.ModuloConexao;
+import br.com.OsX.telas.TelaUsuario;
 import javax.swing.JOptionPane;
-
+import net.proteanit.sql.DbUtils;
 
 /**
  *
  * @author july6
  */
 public class TelaCliente extends javax.swing.JInternalFrame {
-    
-    
+
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
@@ -26,8 +27,9 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         initComponents();
         conexao = ModuloConexao.conector();
     }
+
     //Metodo para adicionar clientes
-     private void adicionar() {
+    private void adicionar() {
         String sql = "INSERT INTO tbclientes(nomeclie,endcli,foneclie,emailcli) VALUES(?, ?, ?, ?)";
         try {
             pst = conexao.prepareStatement(sql);
@@ -35,7 +37,6 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             pst.setString(2, txtCliEndereco.getText());
             pst.setString(3, txtCliFone.getText());
             pst.setString(4, txtCliEmail.getText());
-           
 
             // Validação simples
             if (txtCliNome.getText().isEmpty() || txtCliFone.getText().isEmpty()) {
@@ -50,6 +51,20 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    //metodo para pesquisar pelo nome com filtro
+    //consulta avançada
+    private void pesquisarClientes() {
+        String sql = "Select * like tbclientes from nomecli like ?";
+        try {
+             pst = conexao.prepareStatement(sql);
+             //passando o conteudo da caixa de pesquisa para o interroga
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            
         }
     }
 
@@ -235,4 +250,8 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCliNome;
     private javax.swing.JTextField txtCliPesquisar;
     // End of variables declaration//GEN-END:variables
+
+    private void limparCampos() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

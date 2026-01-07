@@ -33,7 +33,7 @@ public class TelaLogin extends javax.swing.JFrame {
                
         if(rs.next()){
             
-            String perfil = rs.getString(6);
+            String perfil = rs.getString(5);
             
             if(perfil.equals("admin")){
             

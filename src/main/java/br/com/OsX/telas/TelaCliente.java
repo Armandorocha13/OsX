@@ -30,7 +30,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
 
     //Metodo para adicionar clientes
     private void adicionar() {
-        String sql = "INSERT INTO tbclientes(nomeclie,endcli,foneclie,emailcli) VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO tbclientes(nomecli,endcli,fonecli,emailcli) VALUES(?,?,?,?)";
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtCliNome.getText());
@@ -57,15 +57,30 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     //metodo para pesquisar pelo nome com filtro
     //consulta avançada
     private void pesquisarClientes() {
-        String sql = "Select * like tbclientes from nomecli like ?";
+        String sql = "select idcli as id, nomecli as nome, endcli as endereço, fonecli as fone, emailcli as email from tbclientes where nomecli like ?";
         try {
              pst = conexao.prepareStatement(sql);
              //passando o conteudo da caixa de pesquisa para o interroga
+             pst.setString(1, txtCliPesquisar.getText() + "%");
+             rs = pst.executeQuery();
+             
+             //usando a biblioteca para preencher a tabela
+             tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
             
         }
+    }
+    
+    //Metodo para setar os campos do formulario com o conteudo da tabela
+    
+    public void setar_campos(){
+        int setar = tblClientes.getSelectedRow();
+        txtCliNome.setText(tblClientes.getModel().getValueAt(setar,1 ).toString());
+        txtCliEndereco.setText(tblClientes.getModel().getValueAt(setar, 2).toString());
+        txtCliFone.setText(tblClientes.getModel().getValueAt(setar,3 ).toString());
+        txtCliNome.setText(tblClientes.getModel().getValueAt(setar,4  ).toString());
     }
 
     /**
@@ -94,12 +109,18 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         btnaltera = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(606, 394));
+        setPreferredSize(new java.awt.Dimension(697, 430));
         addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
             public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
                 formAncestorMoved(evt);
             }
             public void ancestorResized(java.awt.event.HierarchyEvent evt) {
+            }
+        });
+
+        txtCliPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCliPesquisarKeyReleased(evt);
             }
         });
 
@@ -114,6 +135,11 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblClientes);
 
         jLabel1.setText("*Campos obrigatorios");
@@ -168,9 +194,9 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtCliPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(55, 55, 55)
                                 .addComponent(btnBuscar)
-                                .addGap(89, 89, 89)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                                 .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -217,19 +243,31 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                     .addComponent(btnAdcionar)
                     .addComponent(btnaltera)
                     .addComponent(btnRemover))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
-        setBounds(0, 0, 606, 394);
+        setBounds(0, 0, 671, 423);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdcionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdcionarActionPerformed
-        // TODO add your handling code here:
+        // evento de adicionar clientes na tabela cliente
+        adicionar();
     }//GEN-LAST:event_btnAdcionarActionPerformed
 
     private void formAncestorMoved(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formAncestorMoved
         // TODO add your handling code here:
     }//GEN-LAST:event_formAncestorMoved
+
+    private void txtCliPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCliPesquisarKeyReleased
+        // o evento abaixo e de busca dinamica na tabela
+        
+        pesquisarClientes();
+    }//GEN-LAST:event_txtCliPesquisarKeyReleased
+
+    private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
+        // evento de setar os campos ao clicar na tabela
+        setar_campos();
+    }//GEN-LAST:event_tblClientesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

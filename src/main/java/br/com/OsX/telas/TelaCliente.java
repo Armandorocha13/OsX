@@ -80,9 +80,42 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         txtCliNome.setText(tblClientes.getModel().getValueAt(setar,1 ).toString());
         txtCliEndereco.setText(tblClientes.getModel().getValueAt(setar, 2).toString());
         txtCliFone.setText(tblClientes.getModel().getValueAt(setar,3 ).toString());
-        txtCliNome.setText(tblClientes.getModel().getValueAt(setar,4  ).toString());
-    }
+        txtCliEmail.setText(tblClientes.getModel().getValueAt(setar,4  ).toString());
 
+    }
+    
+    //============================= Metodo alterar dados do cliente
+    
+private void alterar() {
+        String sql = "update tbclientes set nomecli=?,endcli=?,fonecli=?,emailcli=? where nomecli=?";
+        try {
+            pst=conexao.prepareStatement(sql);
+            pst.setString(1, txtCliNome.getText());
+            pst.setString(2, txtCliEndereco.getText());
+            pst.setString(3, txtCliFone.getText());
+            pst.setString(4, txtCliEmail.getText());
+            pst.setString(5  , txtCliNome.getText());
+                    
+                    if ((txtCliNome.getText().isEmpty()) || txtCliFone.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios!");
+                //estrutura para confimar o update de cliente 
+            } else {
+                int adicionado = pst.executeUpdate();
+                if (adicionado > 0) {
+                    JOptionPane.showMessageDialog(null, "Dados do clientes alterados com sucesso!");
+                   
+                    txtCliNome.setText(null);
+                    txtCliEndereco.setText(null);
+                    txtCliFone.setText(null);
+                    txtCliEmail.setText(null);
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,6 +195,11 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         });
 
         btnaltera.setText("Atualizar");
+        btnaltera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnalteraActionPerformed(evt);
+            }
+        });
 
         btnRemover.setText("Deletar");
 
@@ -268,6 +306,12 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         // evento de setar os campos ao clicar na tabela
         setar_campos();
     }//GEN-LAST:event_tblClientesMouseClicked
+
+    private void btnalteraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnalteraActionPerformed
+
+        //chamando o metodo atualizar 
+        alterar();
+    }//GEN-LAST:event_btnalteraActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

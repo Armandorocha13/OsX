@@ -10,6 +10,7 @@ import br.com.OsX.telas.TelaUsuario;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
+
 /**
  *
  * @author july6
@@ -52,6 +53,8 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
+        
+        limpar();
     }
 
     //metodo para pesquisar pelo nome com filtro
@@ -115,7 +118,17 @@ private void alterar() {
             JOptionPane.showMessageDialog(null, e);
 
         }
+        
+        limpar();
     }
+
+private void limpar(){
+        txtCliNome.setText(null);
+        txtCliEndereco.setText(null);
+        txtCliFone.setText(null);
+        txtCliEmail.setText(null);
+    
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -159,13 +172,13 @@ private void alterar() {
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id", "Nome", "Endereço", "Telefone", "Email"
             }
         ));
         tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {

@@ -8,6 +8,7 @@ import java.sql.*;
 import br.com.OsX.dla.ModuloConexao;
 import br.com.OsX.telas.TelaUsuario;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
 
@@ -127,6 +128,10 @@ private void limpar(){
         txtCliEndereco.setText(null);
         txtCliFone.setText(null);
         txtCliEmail.setText(null);
+        (DefaultTableModel) tblClientes.getModel().setRowCount(0);
+        
+        
+        
     
 }
     /**

@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
-
 /**
  *
  * @author july6
@@ -48,14 +47,34 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                 int adicionado = pst.executeUpdate();
                 if (adicionado > 0) {
                     JOptionPane.showMessageDialog(null, "Usuário adicionado com sucesso!");
-                    limparCampos();
+                    limpar();
                 }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-        
+
         limpar();
+    }
+
+    //metodo para deletar os clientes cadastrados
+    private void remover() {
+        int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover este cliente?", "Atenção", 
+                JOptionPane.YES_NO_OPTION);
+        if(confirma == JOptionPane.YES_NO_OPTION){
+            String sql = "delete * from tbclientes where idcli=?";
+            try {
+                pst = conexao.prepareCall(sql);
+                pst.setString(1, txtCliNome.getText());
+                int apagado = pst.executeUpdate();
+                if(apagado > 0){
+                    JOptionPane.showMessageDialog(null, "Cliente removido com sucesso");
+                    limpar();
+                    btnAdcionar.setEnabled(true);
+                }
+            } catch (Exception e) {
+            }
+        }
     }
 
     //metodo para pesquisar pelo nome com filtro
@@ -63,55 +82,50 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private void pesquisarClientes() {
         String sql = "select idcli as id, nomecli as nome, endcli as endereço, fonecli as fone, emailcli as email from tbclientes where nomecli like ?";
         try {
-             pst = conexao.prepareStatement(sql);
-             //passando o conteudo da caixa de pesquisa para o interroga
-             pst.setString(1, txtCliPesquisar.getText() + "%");
-             rs = pst.executeQuery();
-             
-             //usando a biblioteca para preencher a tabela
-             tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
-            
+            pst = conexao.prepareStatement(sql);
+            //passando o conteudo da caixa de pesquisa para o interroga
+            pst.setString(1, txtCliPesquisar.getText() + "%");
+            rs = pst.executeQuery();
+
+            //usando a biblioteca para preencher a tabela
+            tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-            
+
         }
     }
-    
+
     //Metodo para setar os campos do formulario com o conteudo da tabela
-    
-    public void setar_campos(){
+    public void setar_campos() {
         int setar = tblClientes.getSelectedRow();
-        txtCliNome.setText(tblClientes.getModel().getValueAt(setar,1 ).toString());
+        txtCliNome.setText(tblClientes.getModel().getValueAt(setar, 1).toString());
         txtCliEndereco.setText(tblClientes.getModel().getValueAt(setar, 2).toString());
-        txtCliFone.setText(tblClientes.getModel().getValueAt(setar,3 ).toString());
-        txtCliEmail.setText(tblClientes.getModel().getValueAt(setar,4  ).toString());
+        txtCliFone.setText(tblClientes.getModel().getValueAt(setar, 3).toString());
+        txtCliEmail.setText(tblClientes.getModel().getValueAt(setar, 4).toString());
 
     }
-    
+
     //============================= Metodo alterar dados do cliente
-    
-private void alterar() {
+    private void alterar() {
         String sql = "update tbclientes set nomecli=?,endcli=?,fonecli=?,emailcli=? where nomecli=?";
         try {
-            pst=conexao.prepareStatement(sql);
+            pst = conexao.prepareStatement(sql);
             pst.setString(1, txtCliNome.getText());
             pst.setString(2, txtCliEndereco.getText());
             pst.setString(3, txtCliFone.getText());
             pst.setString(4, txtCliEmail.getText());
-            pst.setString(5  , txtCliNome.getText());
-                    
-                    if ((txtCliNome.getText().isEmpty()) || txtCliFone.getText().isEmpty()){
+            pst.setString(5, txtCliNome.getText());
+
+            if ((txtCliNome.getText().isEmpty()) || txtCliFone.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios!");
                 //estrutura para confimar o update de cliente 
             } else {
                 int adicionado = pst.executeUpdate();
                 if (adicionado > 0) {
                     JOptionPane.showMessageDialog(null, "Dados do clientes alterados com sucesso!");
-                   
-                    txtCliNome.setText(null);
-                    txtCliEndereco.setText(null);
-                    txtCliFone.setText(null);
-                    txtCliEmail.setText(null);
+
+                    limpar();
                 }
             }
 
@@ -119,21 +133,21 @@ private void alterar() {
             JOptionPane.showMessageDialog(null, e);
 
         }
-        
+
         limpar();
     }
 
-private void limpar(){
+//metodo para limpar os campos
+    private void limpar() {
         txtCliNome.setText(null);
         txtCliEndereco.setText(null);
         txtCliFone.setText(null);
         txtCliEmail.setText(null);
-        (DefaultTableModel) tblClientes.getModel().setRowCount(0);
-        
-        
-        
-    
-}
+        txtCliPesquisar.setText(null);
+        ((DefaultTableModel) tblClientes.getModel()).setRowCount(0);
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -235,6 +249,11 @@ private void limpar(){
         });
 
         btnRemover.setText("Deletar");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -268,7 +287,6 @@ private void limpar(){
                                     .addComponent(jLabel4))
                                 .addGap(28, 28, 28))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel5)
                                 .addGap(48, 48, 48)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,7 +347,7 @@ private void limpar(){
 
     private void txtCliPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCliPesquisarKeyReleased
         // o evento abaixo e de busca dinamica na tabela
-        
+
         pesquisarClientes();
     }//GEN-LAST:event_txtCliPesquisarKeyReleased
 
@@ -343,6 +361,11 @@ private void limpar(){
         //chamando o metodo atualizar 
         alterar();
     }//GEN-LAST:event_btnalteraActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        // chamando o metodo remover 
+        remover();
+    }//GEN-LAST:event_btnRemoverActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -364,7 +387,5 @@ private void limpar(){
     private javax.swing.JTextField txtCliPesquisar;
     // End of variables declaration//GEN-END:variables
 
-    private void limparCampos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+   
 }

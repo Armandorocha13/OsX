@@ -23,7 +23,9 @@ public class TelaOs extends javax.swing.JInternalFrame {
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-
+//variavel para armazenar o tipo da os
+    
+    private String tipo;
     /**
      * Creates new form TelaCliente
      */
@@ -111,6 +113,23 @@ public class TelaOs extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setPreferredSize(new java.awt.Dimension(926, 628));
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
         addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
             public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
                 formAncestorMoved(evt);
@@ -364,11 +383,12 @@ public class TelaOs extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formAncestorMoved
 
     private void rbtOsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtOsActionPerformed
-        // TODO add your handling code here:
+        tipo = "OS";
     }//GEN-LAST:event_rbtOsActionPerformed
 
     private void rbtOrcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtOrcActionPerformed
-        // TODO add your handling code here:
+        //atribuindo um texto a variavel tipo se selecionado
+        tipo = "Orcamento";
     }//GEN-LAST:event_rbtOrcActionPerformed
 
     private void txtCliPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCliPesquisarKeyReleased
@@ -380,6 +400,12 @@ public class TelaOs extends javax.swing.JInternalFrame {
         //chamando o metodo setar campos
         SetarCampos();
     }//GEN-LAST:event_tblClientesMouseClicked
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        // ao abrir o forma marcar o radio buton
+        rbtOrc.setSelected(true);
+        tipo = "Orcamento";
+    }//GEN-LAST:event_formInternalFrameOpened
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

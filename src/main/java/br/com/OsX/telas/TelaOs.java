@@ -16,6 +16,8 @@ import net.proteanit.sql.DbUtils;
  * @author july6
  */
 public class TelaOs extends javax.swing.JInternalFrame {
+    
+    
 
     Connection conexao = null;
     PreparedStatement pst = null;
@@ -27,6 +29,19 @@ public class TelaOs extends javax.swing.JInternalFrame {
     public TelaOs() {
         initComponents();
         conexao = ModuloConexao.conector();
+    }
+    
+    private void pesquisaCliente(){
+        String sql = "select idcli as Id, nomecli as Nome, fonecli as Telefone from tbclientes where nomecli like ?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtCliPesquisar.getText() + "%");
+            rs = pst.executeQuery();
+            tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     
@@ -52,7 +67,6 @@ public class TelaOs extends javax.swing.JInternalFrame {
         cboOs = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         txtCliPesquisar = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtCliid = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -163,7 +177,11 @@ public class TelaOs extends javax.swing.JInternalFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/OsX/icones/lupa.png"))); // NOI18N
+        txtCliPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCliPesquisarKeyReleased(evt);
+            }
+        });
 
         jLabel5.setText("*Id");
 
@@ -191,9 +209,7 @@ public class TelaOs extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtCliPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
+                        .addGap(67, 67, 67)
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
                         .addComponent(txtCliid, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -205,9 +221,7 @@ public class TelaOs extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtCliPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCliPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel5)
                         .addComponent(txtCliid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -344,6 +358,11 @@ public class TelaOs extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbtOrcActionPerformed
 
+    private void txtCliPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCliPesquisarKeyReleased
+        // Metodo de busca dinamica
+        pesquisaCliente();
+    }//GEN-LAST:event_txtCliPesquisarKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOsAdd;
@@ -357,7 +376,6 @@ public class TelaOs extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

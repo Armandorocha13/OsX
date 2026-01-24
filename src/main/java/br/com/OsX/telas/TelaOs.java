@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
+
 /**
  *
  * @author july6
@@ -42,6 +43,13 @@ public class TelaOs extends javax.swing.JInternalFrame {
 
             JOptionPane.showMessageDialog(null, e);
         }
+        
+    }
+    
+    private void SetarCampos(){
+            //Metodo para setar os campos do formulario com o conteudo da tabela
+        int setar = tblClientes.getSelectedRow();
+     txtCliid.setText(tblClientes.getModel().getValueAt(setar, 0).toString());
     }
 
     
@@ -198,6 +206,11 @@ public class TelaOs extends javax.swing.JInternalFrame {
                 "Id", "Nome", "Telefone"
             }
         ));
+        tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblClientes);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -362,6 +375,11 @@ public class TelaOs extends javax.swing.JInternalFrame {
         // Metodo de busca dinamica
         pesquisaCliente();
     }//GEN-LAST:event_txtCliPesquisarKeyReleased
+
+    private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
+        //chamando o metodo setar campos
+        SetarCampos();
+    }//GEN-LAST:event_tblClientesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

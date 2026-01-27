@@ -67,11 +67,32 @@ public class TelaOs extends javax.swing.JInternalFrame {
             pst.setString(8, txtCliid.getText());
             
             //validacao dos campos obrigatorios
+            try {
+    // 1. Correção da Sintaxe do IF: Todos os testes devem estar dentro de um único par de parênteses principal
+    if (txtCliid.getText().isEmpty() || txtOsEquip.getText().isEmpty() || txtOsDef.getText().isEmpty()) {
+        // Use showMessageDialog para avisos, não showConfirmDialog (que espera sim/não)
+        JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios!");
+    } else {
+        int adicionado = pst.executeUpdate();
+        
+        if (adicionado > 0) {
+            // 2. Correção da Lógica: A mensagem aqui deve ser de sucesso
+            JOptionPane.showMessageDialog(null, "OS emitida com sucesso!");
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+            // 3. Limpeza dos campos (Removido duplicatas e corrigido o fluxo)
+            txtCliid.setText(null);
+            txtOsEquip.setText(null);
+            txtOsDef.setText(null);
+            txtOsServ.setText(null);
+            txtOsTec.setText(null);
+            txtOsValor.setText(null); // Adicionei caso tenha campo de valor
+            
+            // Dica: se houver um ComboBox de status, resete-o aqui também
         }
     }
+} catch (Exception e) {
+    JOptionPane.showMessageDialog(null, "Erro ao emitir OS: " + e);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -291,6 +312,11 @@ public class TelaOs extends javax.swing.JInternalFrame {
         jLabel10.setText("Técnico");
 
         btnOsAdd.setText("Adicionar");
+        btnOsAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOsAddActionPerformed(evt);
+            }
+        });
 
         btnOsBuscar.setText("Buscar");
 
@@ -424,6 +450,11 @@ public class TelaOs extends javax.swing.JInternalFrame {
         rbtOrc.setSelected(true);
         tipo = "Orcamento";
     }//GEN-LAST:event_formInternalFrameOpened
+
+    private void btnOsAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsAddActionPerformed
+        // Atribuindo o evento ao botao adicionar 
+        emitirOs();
+    }//GEN-LAST:event_btnOsAddActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

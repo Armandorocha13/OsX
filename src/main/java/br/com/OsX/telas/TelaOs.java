@@ -11,21 +11,19 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
-
 /**
  *
  * @author july6
  */
 public class TelaOs extends javax.swing.JInternalFrame {
-    
-    
 
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
 //variavel para armazenar o tipo da os
-    
+
     private String tipo;
+
     /**
      * Creates new form TelaCliente
      */
@@ -33,8 +31,8 @@ public class TelaOs extends javax.swing.JInternalFrame {
         initComponents();
         conexao = ModuloConexao.conector();
     }
-    
-    private void pesquisaCliente(){
+
+    private void pesquisaCliente() {
         String sql = "select idcli as Id, nomecli as Nome, fonecli as Telefone from tbclientes where nomecli like ?";
         try {
             pst = conexao.prepareStatement(sql);
@@ -45,16 +43,36 @@ public class TelaOs extends javax.swing.JInternalFrame {
 
             JOptionPane.showMessageDialog(null, e);
         }
-        
-    }
-    
-    private void SetarCampos(){
-            //Metodo para setar os campos do formulario com o conteudo da tabela
-        int setar = tblClientes.getSelectedRow();
-     txtCliid.setText(tblClientes.getModel().getValueAt(setar, 0).toString());
+
     }
 
-    
+    private void SetarCampos() {
+        //Metodo para setar os campos do formulario com o conteudo da tabela
+        int setar = tblClientes.getSelectedRow();
+        txtCliid.setText(tblClientes.getModel().getValueAt(setar, 0).toString());
+    }
+
+    private void emitirOs() {
+        String sql = "insert into tbos(tipo, situacao, equipamento, defeito, servico, tecnico, valor, idcli values(?,?,?,?,?,?,?,?))";
+
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, tipo);
+            pst.setString(2, cboOs.getSelectedItem().toString());
+            pst.setString(3, txtOsEquip.getText());
+            pst.setString(4, txtOsDef.getText());
+            pst.setString(5, txtOsServ.getText());
+            pst.setString(6, txtOsTec.getText());
+            pst.setString(7, txtOsEquip.getText());
+            pst.setString(8, txtCliid.getText());
+            
+            //validacao dos campos obrigatorios
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -443,5 +461,5 @@ public class TelaOs extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtOsValor;
     // End of variables declaration//GEN-END:variables
 
-   
 }
+A
